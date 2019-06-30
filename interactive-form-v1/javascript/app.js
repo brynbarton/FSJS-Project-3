@@ -1,20 +1,21 @@
 $("#name").focus();
 $("#other-title").hide();
 
+//Global variable
 const $design = $("#design");
 const $color = $("#color");
+const $totalCost = $("<span></span>");
+let $tac = "0";
+const $input = $("input:checkbox");
 
 // Hiding 'Select Theme' from menu
 $design.find("option:eq(0)").hide();
 
 // Hiding T-Shirt color options
-
-const $please = $("<option>Please select a T-Shirt Theme</option>").addClass(
-  "defaultColor"
-);
+const $selectTheme = $("<option>Please select a T-Shirt Theme</option>");
 $color.find("option").hide();
-$color.prepend($please);
-$please.show();
+$color.prepend($selectTheme);
+$selectTheme.show();
 $color.find("option:eq(0)").attr("selected", "select");
 
 // Adding classes to Pun shirts
@@ -43,3 +44,49 @@ $design.change(function() {
     $color.find("option:eq(4)").attr("selected", "hearts");
   }
 });
+
+//activities
+
+//create an element to display the total activities cost
+$(".activities").prepend($totalCost);
+
+//listen for changes in the activity section
+$(".activities")
+  .find("input")
+  .change(function(e) {
+    const target = e.target; // Dom 'input' element that was just clicked
+    const targetParent = e.target.parentNode.textContent; // Text content of parent label element
+    const costFinder = "$";
+    const costIndex = targetParent.indexOf(costFinder);
+    const cost = targetParent.slice(costIndex + 1);
+    const dash = targetParent.indexOf("—");
+    const comma = targetParent.indexOf(",");
+    const timeNday = targetParent.slice(dash + 2, comma);
+    if ($(e.target).prop("checked") === true) {
+      //add the cost of the currently clicked activity
+      $tac = parseInt($tac) + parseInt(cost);
+    } else {
+      //subtract the cost of the currently clicked activity
+      $tac = parseInt($tac) - parseInt(cost);
+    }
+    $totalCost.text("Total Cost: $" + $tac);
+
+    //When an activity is checked, disable any activity that occurs at the same day and time
+    //(i.e. "conflicting activities") without disabling the activity that was just checked.
+    let i;
+    let morning = targetParent.indexOf("9a");
+    let afternoon = targetParent.indexOf("1p");
+    for (i = 0; i < $input.length; i++) {
+      if ($input[i].checked === true) {
+        if ($input[i].parentNode.textContent.indexOf("9a") !== -1) {
+          // hide all 9a $input
+          // show if checked
+        } else if ($input[i].parentNode.textContent.indexOf("1p") !== -1) {
+          // block out all the rest of the 1pm
+        }
+      }
+    }
+    //And when an activity is unchecked, you want to enable any conflicting activities.
+  });
+//update and display the total activity cost,
+//and disable conflicting activities
