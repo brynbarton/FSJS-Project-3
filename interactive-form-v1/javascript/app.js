@@ -82,7 +82,7 @@ $(".activities")
         $input[i].parentNode.textContent.indexOf("9a") ===
           e.target.parentNode.textContent.indexOf("9a")
       ) {
-        e.target.prop("disabled") === true;
+        e.target.prop("disabled", "true");
       }
     }
     //And when an activity is unchecked, you want to enable any conflicting activities.
