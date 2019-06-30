@@ -77,13 +77,12 @@ $(".activities")
     let morning = targetParent.indexOf("9a");
     let afternoon = targetParent.indexOf("1p");
     for (i = 0; i < $input.length; i++) {
-      if ($input[i].checked === true) {
-        if ($input[i].parentNode.textContent.indexOf("9a") !== -1) {
-          // hide all 9a $input
-          // show if checked
-        } else if ($input[i].parentNode.textContent.indexOf("1p") !== -1) {
-          // block out all the rest of the 1pm
-        }
+      if (
+        $input[i].parentNode.textContent.indexOf("9a") !== -1 &&
+        $input[i].parentNode.textContent.indexOf("9a") ===
+          e.target.parentNode.textContent.indexOf("9a")
+      ) {
+        e.target.prop("disabled") === true;
       }
     }
     //And when an activity is unchecked, you want to enable any conflicting activities.
