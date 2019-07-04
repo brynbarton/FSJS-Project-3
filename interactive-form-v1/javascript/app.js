@@ -78,11 +78,12 @@ $(".activities")
     let afternoon = targetParent.indexOf("1p");
     for (i = 0; i < $input.length; i++) {
       if (
+        // assuming event target parent node is in the morning, if any of the other classes are at the same time, then...
         $input[i].parentNode.textContent.indexOf("9a") !== -1 &&
         $input[i].parentNode.textContent.indexOf("9a") ===
           e.target.parentNode.textContent.indexOf("9a")
       ) {
-        e.target.prop("disabled", "true");
+        // ...disable the other classes that are at the same time
       }
     }
     //And when an activity is unchecked, you want to enable any conflicting activities.
