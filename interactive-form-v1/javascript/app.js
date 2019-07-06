@@ -7,6 +7,7 @@ const $color = $("#color");
 const $totalCost = $("<span></span>");
 let $tac = "0";
 const $input = $("input:checkbox");
+const allCheckBox = document.querySelectorAll("input", "checkbox");
 
 // Hiding 'Select Theme' from menu
 $design.find("option:eq(0)").hide();
@@ -76,14 +77,18 @@ $(".activities")
     let i;
     let morning = targetParent.indexOf("9a");
     let afternoon = targetParent.indexOf("1p");
-    for (i = 0; i < $input.length; i++) {
+    for (let i = 0; i < $input.length; i++) {
       if (
         // assuming event target parent node is in the morning, if any of the other classes are at the same time, then...
         $input[i].parentNode.textContent.indexOf("9a") !== -1 &&
         $input[i].parentNode.textContent.indexOf("9a") ===
           e.target.parentNode.textContent.indexOf("9a")
       ) {
-        // ...disable the other classes that are at the same time
+      }
+      if ($input[i].parentNode.textContent.indexOf("9a") !== -1) {
+        if ($input[i].checked === false) {
+          console.log($input[i].parentNode.textContent);
+        }
       }
     }
     //And when an activity is unchecked, you want to enable any conflicting activities.
