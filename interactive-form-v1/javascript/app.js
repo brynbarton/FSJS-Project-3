@@ -82,12 +82,10 @@ $(".activities")
         e.target.checked === true &&
         e.target.parentNode.textContent.includes("Tuesday 9am-12pm")
       ) {
-      }
-      if (
-        $input[i].parentNode.textContent.includes("Tuesday 9am-12pm") !== -1
-      ) {
-        if ($input[i].checked === false) {
-          console.log($input[i]);
+        if ($input[i].parentNode.textContent.includes("Tuesday 9am-12pm")) {
+          if ($input[i].checked === false) {
+            $input[i].parentNode.prop("disabled", true);
+          }
         }
       }
     }
