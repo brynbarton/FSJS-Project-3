@@ -79,17 +79,15 @@ $(".activities")
     let afternoon = targetParent.indexOf("1p");
     for (let i = 0; i < $input.length; i++) {
       if (
-        // assuming event target parent node is in the morning, if any of the other classes are at the same time, then...
-        $input[i].parentNode.textContent.includes("Tuesday 9am-12pm") !== -1 &&
-        $input[i].parentNode.textContent.includes("Tuesday 9am-12pm") ===
-          e.target.parentNode.textContent.includes("Tuesday 9am-12pm")
+        e.target.checked === true &&
+        e.target.parentNode.textContent.includes("Tuesday 9am-12pm")
       ) {
       }
       if (
         $input[i].parentNode.textContent.includes("Tuesday 9am-12pm") !== -1
       ) {
         if ($input[i].checked === false) {
-          console.log($index[i]);
+          console.log($input[i]);
         }
       }
     }
