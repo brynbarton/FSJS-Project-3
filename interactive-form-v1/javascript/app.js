@@ -54,42 +54,45 @@ $(".activities").prepend($totalCost);
 //listen for changes in the activity section
 $(".activities")
   .find("input")
-  .change(function(e) {
-    const target = e.target; // Dom 'input' element that was just clicked
-    const targetParent = e.target.parentNode.textContent; // Text content of parent label element
-    const costFinder = "$";
-    const costIndex = targetParent.indexOf(costFinder);
-    const cost = targetParent.slice(costIndex + 1);
-    const dash = targetParent.indexOf("—");
-    const comma = targetParent.indexOf(",");
-    const timeNday = targetParent.slice(dash + 2, comma);
-    if ($(e.target).prop("checked") === true) {
-      //add the cost of the currently clicked activity
-      $tac = parseInt($tac) + parseInt(cost);
-    } else {
-      //subtract the cost of the currently clicked activity
-      $tac = parseInt($tac) - parseInt(cost);
-    }
-    $totalCost.text("Total Cost: $" + $tac);
+  .change(
+    function(e) {
+      const target = e.target; // Dom 'input' element that was just clicked
+      const targetParent = e.target.parentNode.textContent; // Text content of parent label element
+      const costFinder = "$";
+      const costIndex = targetParent.indexOf(costFinder);
+      const cost = targetParent.slice(costIndex + 1);
+      const dash = targetParent.indexOf("—");
+      const comma = targetParent.indexOf(",");
+      const timeNday = targetParent.slice(dash + 2, comma);
+      if ($(e.target).prop("checked") === true) {
+        //add the cost of the currently clicked activity
+        $tac = parseInt($tac) + parseInt(cost);
+      } else {
+        //subtract the cost of the currently clicked activity
+        $tac = parseInt($tac) - parseInt(cost);
+      }
+      $totalCost.text("Total Cost: $" + $tac);
 
-    //When an activity is checked, disable any activity that occurs at the same day and time
-    //(i.e. "conflicting activities") without disabling the activity that was just checked.
-    let i;
-    let morning = targetParent.indexOf("9a");
-    let afternoon = targetParent.indexOf("1p");
-    for (let i = 0; i < $input.length; i++) {
-      if (
-        e.target.checked === true &&
-        e.target.parentNode.textContent.includes("Tuesday 9am-12pm")
-      ) {
-        if ($input[i].parentNode.textContent.includes("Tuesday 9am-12pm")) {
-          if ($input[i].checked === false) {
-            $input[i].parentNode.prop("disabled", true);
+      //When an activity is checked, disable any activity that occurs at the same day and time
+      //(i.e. "conflicting activities") without disabling the activity that was just checked.
+      let i;
+      let morning = targetParent.indexOf("9a");
+      let afternoon = targetParent.indexOf("1p");
+      for (let i = 0; i < $input.length; i++) {
+        if (
+          e.target.checked === true &&
+          e.target.parentNode.textContent.includes("Tuesday 9am-12pm")
+        ) {
+          if (
+            $input[i].parentNode.textContent.includes("Tuesday 9am-12pm") &&
+            $input[i].checked === false
+          ) {
+            $($input[i]).attr("disabled", "disabled");
           }
         }
       }
     }
     //And when an activity is unchecked, you want to enable any conflicting activities.
-  });
+  );
 //update and display the total activity cost,
 //and disable conflicting activities
