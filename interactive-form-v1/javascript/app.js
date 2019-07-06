@@ -92,6 +92,7 @@ $(".activities")
         }
       }
     }
+    //push
     //And when an activity is unchecked, you want to enable any conflicting activities.
   );
 //update and display the total activity cost,
